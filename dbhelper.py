@@ -9,7 +9,7 @@ class DBHelper:
                user=dbconfig.db_user,
                passwd=dbconfig.db_password,
                db=database)
-  
+
     def get_all_inputs(self):
         connection = self.connect()
         try:
@@ -18,8 +18,8 @@ class DBHelper:
                 cursor.execute(query)
             return cursor.fetchall()
         finally:
-        connection.close()
-    
+            connection.close()
+
     def add_input(self, data):
         connection = self.connect()
         try:
@@ -31,7 +31,7 @@ class DBHelper:
                 connection.commit()
         finally:
             connection.close()
-    
+
     def clear_all(self):
         connection = self.connect()
         try:
