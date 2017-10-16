@@ -1,4 +1,4 @@
-mport pymysql
+import pymysql
 import dbconfig
 connection = pymysql.connect(host='localhost',
                              user=dbconfig.db_user,
