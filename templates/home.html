@@ -1,20 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
+
   <script type="text/javascript" 
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBevmFRodHUeKm5XI2eL-tL95MaJ8tyvk"></script>
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBevmFRodHUeKm5XI2eL-tL95MaJ8tyvk">
+  </script>
+  
   <script type="text/javascript">
     var map;
     var marker;
+  
     function initialize() {
       var mapOptions = {
         center: new google.maps.LatLng(30.28863837208974, -97.73643493652344),
-             zoom: 10
+             zoom: 15
       };
       map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
       google.maps.event.addListener(map, 'click', function(event){
         placeMarker(event.latLng);
       });
+      placeCrimes({{crimes | safe}});
+    }
+
+    function placeCrimes(crimes) {
+      for (i=0; i<crimes.length; i++) {
+        crime = new google.maps.Marker({
+          position: new google.maps.LatLng(crimes[i].latitude, crimes[i].longitude),
+          map: map,
+          title: crimes[i].date + "\n" + crimes[i].category + "\n" +
+                  crimes[i].description
+          }
+        );
+      }
     }
 
     function placeMarker(location) {
@@ -30,11 +49,11 @@
       document.getElementById('longitude').value = location.lng();
     }
   </script>
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
+  
   <head>
     <body onload="initialize()">
       <h1>Crime Map</h1>
-      <p>A map of recent cirminal activity in the Austin area.</p>
+      <p>A map of recent criminal activity in the Austin area.</p>
       <div id="map-canvas"></div>
 
       <div id="newcrimeform">
@@ -46,7 +65,7 @@
             <option value="breakin">Break-in</option>
           </select>
           <label for="date">Date</label>
-          <input name="date" id="date" type="date">
+          <input name="date" id="date" type="date" placeholder="format: 2010-10-10">
           <label for="latitute">Latitude</label>
           <input name="latitude" id="latitude" type="text">
           <label for="longitude">Longitude</label>
