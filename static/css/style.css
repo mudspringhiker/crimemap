@@ -19,16 +19,17 @@ input[type="submit"] {
     border: none;
     box-shadow: 1px 1px 1px #4C6E91;
 }
-   input[type="submit"]:hover {
+
+input[type="submit"]:hover {
     background: steelblue;
- }
+}
 
 #map-canvas {
  width: 70%;
  height: 500px;
  float: left;
  }
- 
+
 #newcrimeform {
  float: right;
  width: 25%;
